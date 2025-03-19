@@ -178,7 +178,7 @@ def test_parse_term():
     tokens = tokenize("x*y/z")
     ast, tokens = parse_term(tokens)
     assert ast = {
-        "tag": "/:,
+        "tag": "/",
         "left": {
             "tag": "*",
             "left": {"tag": "identifier", "value": "x"},
