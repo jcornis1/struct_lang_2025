@@ -161,6 +161,7 @@ def test_parse_term():
         "left": {"tag": "number", "value": 2},
         "right": {"tag": "number", "value": 4},
     }
+    assert tokens[0]["tag"] == None
     tokens = tokenize("2*4/6")
     ast, tokens = parse_term(tokens)
     assert ast == {
@@ -172,7 +173,7 @@ def test_parse_term():
         },
         "right": {"tag": "number", "value": 6},
     }
-
+    assert tokens[0]["tag"] == None
     # Additional Test #1: Testing identifiers with multiple operations
     tokens = tokenize("x*y/z")
     ast, tokens = parse_term(tokens)
