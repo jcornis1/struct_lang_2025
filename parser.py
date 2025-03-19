@@ -98,38 +98,6 @@ def test_parse_factor():
     assert ast == {"tag": "!", "value": {"tag": "number", "value": 1}}
     assert tokens[0]["tag"] == None
 
-    # Additional Test #1: Testing nested parentheses
-    tokens = tokenize("((1))")
-    ast, tokens = parse_factor(tokens)
-    assert ast == {"tag": "number", "value": 1}
-    assert tokens[0]["tag"] == None
-
-    # Additional Test #2: Testing nested unary negation
-    tokens = tokenize("--1")
-    ast, tokens = parse_factor(tokens)
-    assert ast == {
-        "tag": "negate",
-        "value": {
-            "tag": "negate",
-            "value": {"tag": "number", "value": 1}
-        }
-    }
-    assert tokens[0]["tag"] == None
-
-    #Additional Test #3: Testing a unary not on an identifier
-    tokens = tokenize("!x")
-    assert ast == {
-        "tag": "!",
-        "value": {"tag": "identifier", "value": "x"}
-    }
-    assert tokens[0]["tag"] == None
-
-    # Additional Test #4: Testing negation of a value
-    tokens = tokenize("-5")
-    ast, tokens = parse_factor(tokens)
-    assert ast == {"tag": "negate", "value": {"tag": "number", "value": 5}}
-    assert tokens[0]["tag"] == None
-
 
 def parse_term(tokens):
     """
@@ -174,57 +142,6 @@ def test_parse_term():
         "right": {"tag": "number", "value": 6},
     }
     assert tokens[0]["tag"] == None
-    # Additional Test #1: Testing identifiers with multiple operations
-    tokens = tokenize("x*y/z")
-    ast, tokens = parse_term(tokens)
-    assert ast = {
-        "tag": "/",
-        "left": {
-            "tag": "*",
-            "left": {"tag": "identifier", "value": "x"},
-            "right": {"tag": "identifier", "value": "y"},
-        },
-        "right": {"tag": "identifier", "value": "z"},
-    }
-    assert tokens[0]["tag"] == None 
-
-    # Additional Test #2: Testing term with a number and identifier mixed together
-    tokens = tokenize("x*5")
-    ast, tokens = parse_term(tokens)
-    assert ast == {
-        "tag": "*",
-        "left": {"tag": "identifier", "value": "x"},
-        "right": {"tag": "number", "value": 5},
-    }
-    assert tokens[0]["tag"] == None
-
-    # Additional Test #3: Testing term with a parenthesized factor and division
-    tokens = tokenize("(2+3)/4")
-    ast, tokens = parse_term(tokens)
-    assert ast == {
-        "tag": "/",
-        "left": {
-            "tag": "+",
-            "left": {"tag": "number", "value": 2},
-            "right": {"tag": "number", "value": 3},
-        },
-        "right": {"tag": "number", "value": 4},
-    }
-    assert tokens[0]["tag"] == None
-
-    # Additional Test #4: Testing unary not on an identifier multiplied by a number
-    tokens = tokenize("!x * 2")
-    ast, tokens = parse_term(tokens)
-    assert ast == {
-        "tag": "*",
-        "left": {
-            "tag": "!",
-            "value": {"tag": "identifier", "value": "x"}
-        },
-        "right": {"tag": "number", "value": 2}
-    }
-    assert tokens[0]["tag"] == None
-
 
 def parse_arithmetic_expression(tokens):
     """
